@@ -2,7 +2,6 @@ package ru.tikodvlp.geoquiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -11,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import java.lang.Exception
 
 private const val TAG = "MainActivity"
 private const val KEY_INDEX = "index"
