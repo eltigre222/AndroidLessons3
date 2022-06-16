@@ -52,6 +52,7 @@
         android:contentDescription="@string/back_button"
         android:src="@mipmap/arrow_right"/>
     </LinearLayout>
+
     <Button
         android:id="@+id/cheat_button"
         android:layout_width="wrap_content"
