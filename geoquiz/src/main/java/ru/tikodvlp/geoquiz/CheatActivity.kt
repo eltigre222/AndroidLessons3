@@ -33,14 +33,12 @@ class CheatActivity : AppCompatActivity() {
             setAnswerShownResult(true)
         }
     }
-
     private fun setAnswerShownResult(isAnswerShown: Boolean) {
         val data = Intent().apply {
             putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown)
         }
         setResult(Activity.RESULT_OK, data)
     }
-
     companion object {
         fun newIntent(packageContext: Context, answerIsTrue: Boolean): Intent {
             return Intent(packageContext, CheatActivity::class.java).apply {
