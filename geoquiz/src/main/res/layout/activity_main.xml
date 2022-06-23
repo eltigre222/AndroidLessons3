@@ -59,4 +59,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/cheat_button"/>
+    <TextView
+        android:id="@+id/api_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:text="@string/api_level"/>
 </LinearLayout>

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var backButton: ImageButton
     private lateinit var cheatButton: Button
     private lateinit var questionTextView: TextView
+    private lateinit var apiLevel: TextView
 
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProviders.of(this).get(QuizViewModel::class.java)
@@ -49,6 +50,10 @@ class MainActivity : AppCompatActivity() {
         backButton = findViewById(R.id.back_button)
         cheatButton = findViewById(R.id.cheat_button)
         questionTextView = findViewById(R.id.question_text_view)
+        apiLevel = findViewById(R.id.api_level)
+
+        val buildNumber = Build.VERSION.SDK_INT.toString() // to display
+        apiLevel.text = "API level: $buildNumber"          // sdk in textView
 
         trueButton.setOnClickListener{ view: View ->
             checkAnswer(true)
