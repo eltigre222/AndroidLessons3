@@ -7,12 +7,15 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
+import android.widget.Toast.makeText
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import java.lang.Exception
@@ -81,15 +84,23 @@ class MainActivity : AppCompatActivity() {
             falseButton.isClickable = false
         }
 
+        var tokens = 3
         cheatButton.setOnClickListener{ view ->
-            val answerIsTrue = quizViewModel.currentQuestionAnswer
-            val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val options = ActivityOptions.makeClipRevealAnimation(view, 0, 0,
-                    view.width, view.height)
-                startActivityForResult(intent, REQUEST_CODE_CHEAT, options.toBundle())
+            if (tokens <= 3 && tokens != 0) {
+                tokens -= 1
+                makeText(this, "Cheats remaining $tokens", LENGTH_SHORT).show()
+                val answerIsTrue = quizViewModel.currentQuestionAnswer
+                val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    val options = ActivityOptions.makeClipRevealAnimation(view, 0, 0,
+                        view.width, view.height)
+                    startActivityForResult(intent, REQUEST_CODE_CHEAT, options.toBundle())
+            }else {
+                    startActivityForResult(intent, REQUEST_CODE_CHEAT)
+                }
             } else {
-                startActivityForResult(intent, REQUEST_CODE_CHEAT)
+                cheatButton.isEnabled = false
+                makeText(this, "No more cheats", LENGTH_SHORT).show()
             }
         }
         updateQuestion()
