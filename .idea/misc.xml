@@ -6,6 +6,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16394927536231885" />
         <entry key="criminalintent/src/main/res/layout/activity_main.xml" value="0.21195652173913043" />
         <entry key="criminalintent/src/main/res/layout/fragment_crime.xml" value="0.21195652173913043" />
+        <entry key="criminalintent/src/main/res/layout/fragment_crime_list.xml" value="0.21195652173913043" />
+        <entry key="criminalintent/src/main/res/layout/list_item_crime.xml" value="0.21195652173913043" />
         <entry key="geoquiz/src/main/res/layout-land/activity_main.xml" value="0.24375" />
         <entry key="geoquiz/src/main/res/layout/activity_cheat.xml" value="0.21195652173913043" />
         <entry key="geoquiz/src/main/res/layout/activity_main.xml" value="0.33" />
