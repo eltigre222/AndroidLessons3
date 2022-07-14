@@ -7,9 +7,9 @@ import java.util.*
 
 @Dao
 interface CrimeDao {
-@Query("Select * FROM crime")
-fun getCrimes(): List<Crime>
+    @Query("Select * FROM crime")
+    fun getCrimes(): List<Crime>
 
-@Query("Select * FROM crime WHERE id=(:id)")
-fun getCrime(id: UUID): Crime?
+    @Query("Select * FROM crime WHERE id=(:id)")
+    fun getCrime(id: UUID): Crime?
 }
