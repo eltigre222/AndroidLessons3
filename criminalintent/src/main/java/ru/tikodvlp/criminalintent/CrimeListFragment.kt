@@ -20,18 +20,23 @@ import java.util.*
 private const val TAG = "CrimeListFragment"
 
 class CrimeListFragment : Fragment() {
-
+    /**
+     * Required interface for hosting activities
+     *
+     */
     interface Callbacks {
-        fun onCrimeSelected(crimeId: UUID)
+        fun onCrimeSelected(crimeId: UUID);
     }
 
     private var callbacks: Callbacks? = null
-    private lateinit var crimeRecyclerView: RecyclerView
-    private var adapter: CrimeAdapter? = CrimeAdapter(emptyList())
 
     private val crimeListViewModel: CrimeListViewModel by lazy {
         ViewModelProviders.of(this).get(CrimeListViewModel::class.java)
     }
+
+    private lateinit var crimeRecyclerView: RecyclerView;
+
+    private var adapter: CrimeAdapter? = CrimeAdapter(emptyList())
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,12 +60,9 @@ class CrimeListFragment : Fragment() {
         crimeListViewModel.crimeListLiveData.observe(
             viewLifecycleOwner,
             Observer { crimes ->
-                crimes?.let {
-                    Log.i(TAG, "Got crimes ${crimes.size}")
-                    updateUI(crimes)
-                }
-            }
-        )
+                crimes?.let { Log.i(TAG, "Got crimes ${crimes.size}") }
+                updateUI(crimes)
+            })
     }
 
     override fun onDetach() {
@@ -73,12 +75,19 @@ class CrimeListFragment : Fragment() {
         crimeRecyclerView.adapter = adapter
     }
 
-    private inner class CrimeHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
-        private lateinit var crime: Crime
+    companion object {
+        fun newInstance(): CrimeListFragment {
+            return CrimeListFragment()
+        }
+    }
 
-        private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
-        private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
-        private val solvedImageView: ImageView = itemView.findViewById(R.id.crime_solved)
+    private inner class CrimeHolder(view: View) : RecyclerView.ViewHolder(view),
+        View.OnClickListener {
+        private val titleTextView: TextView = itemView.findViewById(R.id.crime_title) as TextView
+        private val dateTextView: TextView = itemView.findViewById(R.id.crime_date) as TextView
+        private val solvedImageView: ImageView =
+            itemView.findViewById(R.id.crime_solved) as ImageView
+        private lateinit var crime: Crime
 
         init {
             itemView.setOnClickListener(this)
@@ -86,9 +95,8 @@ class CrimeListFragment : Fragment() {
 
         fun bind(crime: Crime) {
             this.crime = crime
-            titleTextView.text = this.crime.title
-            dateTextView.text = DateFormat.format("EEE dd MMM yyyy, hh:mm", this.crime.date)
-            //image visibility
+            titleTextView.text = crime.title
+            dateTextView.text = crime.date.toString()
             solvedImageView.visibility = if (crime.isSolved) {
                 View.VISIBLE
             } else {
@@ -96,12 +104,21 @@ class CrimeListFragment : Fragment() {
             }
         }
 
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v The view that was clicked.
+         */
         override fun onClick(v: View?) {
             callbacks?.onCrimeSelected(crime.id)
         }
+
+
     }
 
-    private inner class CrimeAdapter(var crimes: List<Crime>) : RecyclerView.Adapter<CrimeHolder>() {
+    private inner class CrimeAdapter(var crimes: List<Crime>) :
+        RecyclerView.Adapter<CrimeHolder>() {
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrimeHolder {
             val view = layoutInflater.inflate(R.layout.list_item_crime, parent, false)
             return CrimeHolder(view)
@@ -112,13 +129,7 @@ class CrimeListFragment : Fragment() {
             holder.bind(crime)
         }
 
-        override fun getItemCount() = crimes.size
+        override fun getItemCount(): Int = crimes.size
 
-    }
-
-    companion object {
-        fun newInstance(): CrimeListFragment {
-            return CrimeListFragment()
-        }
     }
 }

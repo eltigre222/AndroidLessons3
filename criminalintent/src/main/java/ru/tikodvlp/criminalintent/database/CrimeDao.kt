@@ -14,7 +14,7 @@ interface CrimeDao {
     fun getCrimes(): LiveData<List<Crime>>
 
     @Query("Select * FROM crime WHERE id=(:id)")
-    fun getCrime(id: UUID): LiveData<Crime>?
+    fun getCrime(id: UUID): LiveData<Crime?>
 
     @Update
     fun updateCrime(crime: Crime)
