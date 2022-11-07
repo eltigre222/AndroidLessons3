@@ -110,7 +110,7 @@ class CrimeFragment : Fragment() {
 
         dateButton.setOnClickListener {
             DatePickerFragment.newInstance(crime.date).apply {
-                show(this@CrimeFragment.requireFragmentManager(), DIALOG_DATE)
+                show(this@CrimeFragment.parentFragmentManager, DIALOG_DATE) // заменил deprecated requireFragmentManager()
             }
         }
     }
