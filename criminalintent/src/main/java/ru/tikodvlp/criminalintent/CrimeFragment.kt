@@ -1,27 +1,26 @@
 package ru.tikodvlp.criminalintent
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.lifecycle.Observer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentResultListener
 import androidx.lifecycle.ViewModelProviders
 import java.util.*
 
 private const val ARG_CRIME_ID = "crime_id"
 private const val TAG = "CrimeFragment"
 private const val DIALOG_DATE = "DialogDate"
-private const val REQUEST_DATE = 0
+private const val REQUEST_DATE = "DialogDate"
 
-class CrimeFragment : Fragment() {
+class CrimeFragment : Fragment(), FragmentResultListener {
     private lateinit var crime: Crime
     private lateinit var titleField: EditText
     private lateinit var dateButton: Button
@@ -70,6 +69,7 @@ class CrimeFragment : Fragment() {
                     updateUI()
                 }
             })
+        childFragmentManager.setFragmentResultListener(REQUEST_DATE, viewLifecycleOwner, this)
     }
 
     private fun updateUI() {
@@ -109,14 +109,29 @@ class CrimeFragment : Fragment() {
         }
 
         dateButton.setOnClickListener {
-            DatePickerFragment.newInstance(crime.date).apply {
-                show(this@CrimeFragment.parentFragmentManager, DIALOG_DATE) // заменил deprecated requireFragmentManager()
-            }
+            DatePickerFragment
+                .newInstance(crime.date, REQUEST_DATE)
+                .show(childFragmentManager, REQUEST_DATE)
         }
     }
 
     override fun onStop() {
         super.onStop()
         crimeDetailViewModel.saveCrime(crime)
+    }
+
+    //override fun onDateSelected(date: Date) {
+    //  crime.date = date
+    //updateUI()
+    //}
+
+    override fun onFragmentResult(requestCode: String, result: Bundle) {
+        when (requestCode) {
+            REQUEST_DATE -> {
+                Log.d(TAG, "received result for $requestCode")
+                crime.date = DatePickerFragment.getSelectedDate(result)
+                updateUI()
+            }
+        }
     }
 }
