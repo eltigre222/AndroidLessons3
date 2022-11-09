@@ -3,9 +3,6 @@ package ru.tikodvlp.criminalintent
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.text.format.DateFormat
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import java.util.*
 
@@ -43,6 +44,10 @@ class CrimeListFragment : Fragment() {
         callbacks = context as Callbacks?
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,12 +68,23 @@ class CrimeListFragment : Fragment() {
                 crimes?.let { Log.i(TAG, "Got crimes ${crimes.size}") }
                 updateUI(crimes)
             })
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_crime_list, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                TODO("Not yet implemented")
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onDetach() {
         super.onDetach()
         callbacks = null
     }
+
 
     private fun updateUI(crimes: List<Crime>) {
         adapter = CrimeAdapter(crimes)
@@ -112,8 +128,6 @@ class CrimeListFragment : Fragment() {
         override fun onClick(v: View?) {
             callbacks?.onCrimeSelected(crime.id)
         }
-
-
     }
 
     private inner class CrimeAdapter(var crimes: List<Crime>) :
