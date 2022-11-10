@@ -90,7 +90,6 @@ class CrimeListFragment : Fragment() {
         callbacks = null
     }
 
-
     private fun updateUI(crimes: List<Crime>) {
         adapter = CrimeAdapter(crimes)
         crimeRecyclerView.adapter = adapter
@@ -125,11 +124,6 @@ class CrimeListFragment : Fragment() {
             }
         }
 
-        /**
-         * Called when a view has been clicked.
-         *
-         * @param v The view that was clicked.
-         */
         override fun onClick(v: View?) {
             callbacks?.onCrimeSelected(crime.id)
         }
@@ -149,6 +143,5 @@ class CrimeListFragment : Fragment() {
         }
 
         override fun getItemCount(): Int = crimes.size
-
     }
 }
