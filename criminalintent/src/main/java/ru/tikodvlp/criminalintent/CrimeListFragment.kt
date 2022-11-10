@@ -21,10 +21,7 @@ import java.util.*
 private const val TAG = "CrimeListFragment"
 
 class CrimeListFragment : Fragment() {
-    /**
-     * Required interface for hosting activities
-     *
-     */
+
     interface Callbacks {
         fun onCrimeSelected(crimeId: UUID);
     }
@@ -75,7 +72,15 @@ class CrimeListFragment : Fragment() {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                TODO("Not yet implemented")
+                return when (menuItem.itemId) {
+                    R.id.new_crime -> {
+                        val crime = Crime()
+                        crimeListViewModel.addCrime(crime)
+                        callbacks?.onCrimeSelected(crime.id)
+                        true
+                    }
+                    else -> false
+                }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
