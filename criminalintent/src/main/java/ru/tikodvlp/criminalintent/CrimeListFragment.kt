@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.text.format.DateFormat
 import android.view.*
+import android.widget.ImageButton
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -91,8 +92,14 @@ class CrimeListFragment : Fragment() {
     }
 
     private fun updateUI(crimes: List<Crime>) {
-        adapter = CrimeAdapter(crimes)
-        crimeRecyclerView.adapter = adapter
+        if (crimes.isEmpty()){
+            val tvNoData = view?.findViewById(R.id.tvNoData) as TextView
+            tvNoData.setVisibility(View.VISIBLE)
+        } else {
+            adapter = CrimeAdapter(crimes)
+            crimeRecyclerView.adapter = adapter
+        }
+
     }
 
     companion object {
