@@ -92,10 +92,12 @@ class CrimeListFragment : Fragment() {
     }
 
     private fun updateUI(crimes: List<Crime>) {
+        var tvNoData = view?.findViewById(R.id.tvNoData) as TextView
         if (crimes.isEmpty()){
-            val tvNoData = view?.findViewById(R.id.tvNoData) as TextView
+            tvNoData = view?.findViewById(R.id.tvNoData) as TextView
             tvNoData.setVisibility(View.VISIBLE)
         } else {
+            tvNoData.setVisibility(View.GONE)
             adapter = CrimeAdapter(crimes)
             crimeRecyclerView.adapter = adapter
         }
