@@ -71,7 +71,6 @@ class CrimeListFragment : Fragment() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.fragment_crime_list, menu)
             }
-
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.new_crime -> {
@@ -103,13 +102,11 @@ class CrimeListFragment : Fragment() {
         }
 
     }
-
     companion object {
         fun newInstance(): CrimeListFragment {
             return CrimeListFragment()
         }
     }
-
     private inner class CrimeHolder(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
         private val titleTextView: TextView = itemView.findViewById(R.id.crime_title) as TextView
@@ -121,7 +118,6 @@ class CrimeListFragment : Fragment() {
         init {
             itemView.setOnClickListener(this)
         }
-
         fun bind(crime: Crime) {
             this.crime = crime
             titleTextView.text = crime.title
@@ -137,20 +133,16 @@ class CrimeListFragment : Fragment() {
             callbacks?.onCrimeSelected(crime.id)
         }
     }
-
     private inner class CrimeAdapter(var crimes: List<Crime>) :
         RecyclerView.Adapter<CrimeHolder>() {
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrimeHolder {
             val view = layoutInflater.inflate(R.layout.list_item_crime, parent, false)
             return CrimeHolder(view)
         }
-
         override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
             val crime = crimes[position]
             holder.bind(crime)
         }
-
         override fun getItemCount(): Int = crimes.size
     }
 }
