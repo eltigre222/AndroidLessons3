@@ -102,6 +102,7 @@ class CrimeListFragment : Fragment() {
         }
 
     }
+
     companion object {
         fun newInstance(): CrimeListFragment {
             return CrimeListFragment()
@@ -128,7 +129,6 @@ class CrimeListFragment : Fragment() {
                 View.GONE
             }
         }
-
         override fun onClick(v: View?) {
             callbacks?.onCrimeSelected(crime.id)
         }

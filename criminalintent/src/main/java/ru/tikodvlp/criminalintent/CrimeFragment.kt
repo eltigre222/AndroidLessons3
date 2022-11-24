@@ -200,6 +200,7 @@ class CrimeFragment : Fragment(), FragmentResultListener {
     //  crime.date = date
     //updateUI()
     //}
+
     override fun onFragmentResult(requestCode: String, result: Bundle) {
         when (requestCode) {
             REQUEST_DATE -> {
