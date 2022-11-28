@@ -100,7 +100,6 @@ class CrimeListFragment : Fragment() {
             adapter = CrimeAdapter(crimes)
             crimeRecyclerView.adapter = adapter
         }
-
     }
 
     companion object {
