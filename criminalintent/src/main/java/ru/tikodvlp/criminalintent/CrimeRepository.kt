@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import ru.tikodvlp.criminalintent.database.CrimeDao
 import ru.tikodvlp.criminalintent.database.CrimeDatabase
-import ru.tikodvlp.criminalintent.database.migration_1_2
+import ru.tikodvlp.criminalintent.database.migration_2_3
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -17,7 +17,7 @@ class CrimeRepository private constructor(context: Context) {
         Room.databaseBuilder(context.applicationContext,
             CrimeDatabase::class.java,
             DATABASE_NAME
-        ).addMigrations(migration_1_2)
+        ).addMigrations(migration_2_3)
             .build()
 
     private val crimeDao: CrimeDao = database.crimeDao()

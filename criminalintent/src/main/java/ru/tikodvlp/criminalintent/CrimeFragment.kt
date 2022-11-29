@@ -1,5 +1,7 @@
 package ru.tikodvlp.criminalintent
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.lifecycle.ViewModelProviders
@@ -25,6 +28,7 @@ import java.util.*
 private const val ARG_CRIME_ID = "crime_id"
 private const val TAG = "CrimeFragment"
 private const val REQUEST_CONTACT = 1
+private const val REQUEST_PHONE = 2
 private const val REQUEST_DATE = "DialogDate"
 private const val DATE_FORMAT = "EEE, MMM, dd"
 
@@ -33,6 +37,7 @@ class CrimeFragment : Fragment(), FragmentResultListener {
     private lateinit var titleField: EditText
     private lateinit var dateButton: Button
     private lateinit var reportButton: Button
+    private lateinit var callSuspectButton: Button
     private lateinit var suspectButton: Button
     private lateinit var solvedCheckBox: CheckBox
     private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
@@ -68,6 +73,7 @@ class CrimeFragment : Fragment(), FragmentResultListener {
         solvedCheckBox = view.findViewById(R.id.crime_solved) as CheckBox
         reportButton = view.findViewById(R.id.crime_report) as Button
         suspectButton = view.findViewById(R.id.crime_suspect) as Button
+        callSuspectButton = view.findViewById(R.id.call_suspect) as Button
 
         return view
     }
@@ -100,28 +106,55 @@ class CrimeFragment : Fragment(), FragmentResultListener {
 
             requestCode == REQUEST_CONTACT && data != null -> {
                 val contactUri: Uri? = data.data
-                // указать для каких полей ваш запрос должен возвращать значения
-                val queryFields = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
-                // выполняемый здесь запрос - ContactUri похож на предложение "where"
-                val cursor = contactUri?.let {
-                    requireActivity().contentResolver
-                        .query(it, queryFields, null, null, null)
-                }
-                cursor?.use {
-                    // проверка что курсор содержит хотя бы 1 результат
+                // queryFieldsName: a List to return the DISPLAY_NAME Column Only
+                val queryFieldsName = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
+                // queryFieldsId: a List to return the _ID Column Only, i will use it to get the suspect Id
+                val queryFieldsId = arrayOf(ContactsContract.Contacts._ID)
+
+                val cursorName = requireActivity().contentResolver
+                    .query(contactUri!!, queryFieldsName, null, null, null)
+                cursorName?.use {
                     if (it.count == 0) {
                         return
                     }
-                    // первый столбец строки данных - это имя вашего подозреваемого
                     it.moveToFirst()
                     val suspect = it.getString(0)
                     crime.suspect = suspect
-                    crimeDetailViewModel.saveCrime(crime)
                     suspectButton.text = suspect
+                }
+                // I created another Cursor to get the suspect Id
+                val cursorId = requireActivity().contentResolver
+                    .query(contactUri!!, queryFieldsId, null, null, null)
+                cursorId?.use {
+                    if (it.count == 0) {
+                        return
+                    }
+                    it.moveToFirst()
+                    // here i put the suspect Id in contactId to use it later (to get the phone number)
+                    val contactId = it.getString(0)
+                    // This is the Uri to get a Phone number
+                    val phoneURI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+                    // phoneNumberQueryFields: a List to return the PhoneNumber Column Only
+                    val phoneNumberQueryFields = arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                    // phoneWhereClause: A filter declaring which rows to return, formatted as an SQL WHERE clause (excluding the WHERE itself)
+                    val phoneWhereClause = "${ContactsContract.CommonDataKinds.Phone.CONTACT_ID} = ?"
+                    // This val replace the question mark in the phoneWhereClause  val
+                    val phoneQueryParameters = arrayOf(contactId)
+                    val phoneCursor = requireActivity().contentResolver
+                        .query(phoneURI, phoneNumberQueryFields, phoneWhereClause, phoneQueryParameters, null )
+
+                    phoneCursor?.use { cursorPhone ->
+                        cursorPhone.moveToFirst()
+                        val phoneNumValue = cursorPhone.getString(0)
+                        // after retrieving the phone number i put it in the crime.phone
+                        crime.phone = phoneNumValue
+                    }
+                    crimeDetailViewModel.saveCrime(crime)
                 }
             }
         }
     }
+
     private fun getCrimeReport(): String {
         val solvedString = if (crime.isSolved) {
             getString(R.string.crime_report_solved)
@@ -194,7 +227,67 @@ class CrimeFragment : Fragment(), FragmentResultListener {
                 isEnabled = false
             }
         }
+        callSuspectButton.apply {
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.READ_CONTACTS
+                ) -> {
+                    val pickPhoneIntent =
+                        Intent(
+                            Intent.ACTION_PICK,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+                        )
+                    setOnClickListener {
+                        startActivityForResult(pickPhoneIntent, REQUEST_PHONE)
+                    }
+                }
+                else -> {
+                    // You can directly ask for the permission.
+                    requestPermissions(
+                        arrayOf(Manifest.permission.READ_CONTACTS),
+                        REQUEST_PHONE
+                    )
+                }
+            }
+        }
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_PHONE -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() &&
+                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                ) {
+                    val pickPhoneIntent =
+                        Intent(
+                            Intent.ACTION_PICK
+                        ).apply {
+                            type = ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
+                        }
+                    startActivityForResult(pickPhoneIntent, REQUEST_PHONE)
+
+                } else {
+                    // Explain to the user that the feature is unavailable because
+                    // the features requires a permission that the user has denied.
+                    // At the same time, respect the user's decision. Don't link to
+                    // system settings in an effort to convince the user to change
+                    // their decision.
+                    Log.e("CrimeFragment", "Unavailable permissions CONTACTS")
+                }
+                return
+            }
+            else -> {
+            }
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         crimeDetailViewModel.saveCrime(crime)
