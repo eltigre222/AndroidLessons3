@@ -177,7 +177,6 @@ class CrimeFragment : Fragment(), FragmentResultListener {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // This space intentionally left blank
             }
-
             override fun onTextChanged(
                 sequence: CharSequence?,
                 start: Int,
@@ -186,7 +185,6 @@ class CrimeFragment : Fragment(), FragmentResultListener {
             ) {
                 crime.title = sequence.toString()
             }
-
             override fun afterTextChanged(s: Editable?) {
                 // This space intentionally left blank
             }
@@ -252,7 +250,6 @@ class CrimeFragment : Fragment(), FragmentResultListener {
             }
         }
     }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -287,7 +284,6 @@ class CrimeFragment : Fragment(), FragmentResultListener {
             }
         }
     }
-
     override fun onStop() {
         super.onStop()
         crimeDetailViewModel.saveCrime(crime)
@@ -296,7 +292,6 @@ class CrimeFragment : Fragment(), FragmentResultListener {
     //  crime.date = date
     //updateUI()
     //}
-
     override fun onFragmentResult(requestCode: String, result: Bundle) {
         when (requestCode) {
             REQUEST_DATE -> {
