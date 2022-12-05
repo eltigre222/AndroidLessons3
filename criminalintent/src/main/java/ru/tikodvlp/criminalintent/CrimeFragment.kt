@@ -22,6 +22,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -114,6 +115,7 @@ class CrimeFragment : Fragment(), FragmentResultListener {
         if (crime.suspect.isNotEmpty()) {
             suspectButton.text = crime.suspect
         }
+        updatePhotoView()
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when {
@@ -166,6 +168,10 @@ class CrimeFragment : Fragment(), FragmentResultListener {
                     }
                     crimeDetailViewModel.saveCrime(crime)
                 }
+            }
+            requestCode == REQUEST_PHOTO -> {
+                requireActivity().revokeUriPermission(photoUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                updatePhotoView()
             }
         }
     }
@@ -260,7 +266,9 @@ class CrimeFragment : Fragment(), FragmentResultListener {
                         cameraActivity.activityInfo.packageName, photoUri,
                         Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 }
-                startActivityForResult(captureImage, REQUEST_PHONE)
+                Log.d (TAG,"Photo File $photoUri")
+                //startActivityForResult(captureImage, REQUEST_PHONE)
+                takePicture.launch(photoUri)
             }
         }
         callSuspectButton.apply {
@@ -288,6 +296,23 @@ class CrimeFragment : Fragment(), FragmentResultListener {
             }
         }
     }
+
+    val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) { success -> Boolean
+        if (success) {
+            Log.d (TAG, "We took a picture...")
+            updatePhotoView()
+        }
+    }
+
+    private fun updatePhotoView() {
+        if(photoFile.exists()) {
+            val bitmap = getScaledBitmap(photoFile.path, requireActivity())
+            photoView.setImageBitmap(bitmap)
+        } else {
+            photoView.setImageDrawable(null)
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -330,6 +355,13 @@ class CrimeFragment : Fragment(), FragmentResultListener {
     //  crime.date = date
     //updateUI()
     //}
+
+    override fun onDetach() {
+        super.onDetach()
+        requireActivity().revokeUriPermission(photoUri,
+        Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+    }
+
     override fun onFragmentResult(requestCode: String, result: Bundle) {
         when (requestCode) {
             REQUEST_DATE -> {
