@@ -267,7 +267,7 @@ class CrimeFragment : Fragment(), FragmentResultListener {
                         Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 }
                 Log.d (TAG,"Photo File $photoUri")
-                //startActivityForResult(captureImage, REQUEST_PHONE)
+                startActivityForResult(captureImage, REQUEST_PHONE)
                 takePicture.launch(photoUri)
             }
         }
