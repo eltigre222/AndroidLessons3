@@ -30,7 +30,6 @@ fun getScaledBitmap(path: String, destWidth: Int, destHeight: Int): Bitmap {
 
     options = BitmapFactory.Options()
     options.inSampleSize = inSampleSize
-
     // чтение и создание окончательного растрового изображения
     return BitmapFactory.decodeFile(path, options)
 }

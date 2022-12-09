@@ -16,12 +16,15 @@ class CrimeDetailViewModel(): ViewModel() {
         Transformations.switchMap(crimeIdLiveData) { crimeId ->
             crimeRepository.getCrime(crimeId)
         }
+
     fun loadCrime(crimeId: UUID) {
         crimeIdLiveData.value = crimeId
     }
+
     fun saveCrime(crime: Crime) {
         crimeRepository.updateCrime(crime)
     }
+
     fun getPhotoFile(crime: Crime): File {
         return crimeRepository.getPhotoFile(crime)
     }

@@ -296,7 +296,6 @@ class CrimeFragment : Fragment(), FragmentResultListener {
             }
         }
     }
-
     val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) { success -> Boolean
         if (success) {
             Log.d (TAG, "We took a picture...")
@@ -361,7 +360,6 @@ class CrimeFragment : Fragment(), FragmentResultListener {
         requireActivity().revokeUriPermission(photoUri,
         Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
     }
-
     override fun onFragmentResult(requestCode: String, result: Bundle) {
         when (requestCode) {
             REQUEST_DATE -> {
