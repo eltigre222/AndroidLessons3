@@ -16,3 +16,4 @@ rootProject.name = "Android lessons3"
 include ':app'
 include ':geoquiz'
 include ':criminalintent'
+include ':samodelkin'
