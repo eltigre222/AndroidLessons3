@@ -12,7 +12,7 @@ private val lastName = listOf("Lightweaver", "Greatfoot", "Oakenfeld")
 
 object CharacterGenerator {
     data class CharacterData(val name: String, val race: String, val dex: String,
-                             val wis: String, val str: String)
+                             val wis: String, val str: String) : java.io.Serializable
 
     private fun name() = "${firstName.rand()} ${lastName.rand()}"
 
