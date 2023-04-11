@@ -30,7 +30,6 @@ class NewCharacterActivity : AppCompatActivity() {
                 displayCharacterData()
             }
         }
-
         displayCharacterData()
     }
     private fun displayCharacterData() {
