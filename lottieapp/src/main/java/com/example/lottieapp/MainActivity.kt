@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
                 lottieView.repeatMode = LottieDrawable.REVERSE
                 lottieView.playAnimation()
             }
+
             btnStop.setOnClickListener {
                 lottieView.setMinProgress(0.59f)
                 lottieView.setMaxProgress(0.75f)
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
                 lottieView.repeatMode = LottieDrawable.RESTART
                 lottieView.playAnimation()
             }
+
             btnAnim.setOnClickListener {
                 lottieView.setMinProgress(0.0f)
                 lottieView.setMaxProgress(1.0f)
