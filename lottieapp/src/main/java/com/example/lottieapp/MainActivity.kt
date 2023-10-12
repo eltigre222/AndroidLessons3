@@ -6,7 +6,6 @@ import com.airbnb.lottie.LottieDrawable
 import com.example.lottieapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +21,6 @@ class MainActivity : AppCompatActivity() {
                 lottieView.repeatMode = LottieDrawable.REVERSE
                 lottieView.playAnimation()
             }
-
             btnStop.setOnClickListener {
                 lottieView.setMinProgress(0.59f)
                 lottieView.setMaxProgress(0.75f)
@@ -30,7 +28,6 @@ class MainActivity : AppCompatActivity() {
                 lottieView.repeatMode = LottieDrawable.RESTART
                 lottieView.playAnimation()
             }
-
             btnAnim.setOnClickListener {
                 lottieView.setMinProgress(0.0f)
                 lottieView.setMaxProgress(1.0f)
