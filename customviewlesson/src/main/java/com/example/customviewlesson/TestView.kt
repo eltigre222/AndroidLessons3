@@ -28,6 +28,7 @@ class TestView(
         if (canvas != null) {
             canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paintC)
         }
+
         if (canvas != null) {
             paint.color = Color.RED
             canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), 100f, paint)
