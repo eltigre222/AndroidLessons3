@@ -22,11 +22,13 @@ class TestView(
         paintC.style = Paint.Style.FILL
         paintC.color = Color.GRAY
     }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         if (canvas != null) {
             canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paintC)
         }
+
         if (canvas != null) {
             paint.color = Color.RED
             canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), 100f, paint)
