@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <menu xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/discount"
+        android:title="Discount"
+        android:icon="@drawable/discount"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/home"
+        android:title="Homew"
+        android:icon="@drawable/home"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>
