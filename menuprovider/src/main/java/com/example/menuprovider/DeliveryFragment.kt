@@ -20,17 +20,21 @@ class DeliveryFragment : Fragment(), MenuProvider {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_delivery, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = DeliveryFragment()
     }
+
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.deliver_menu, menu)
     }
+
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         when(menuItem.itemId) {
             R.id.discount -> {
