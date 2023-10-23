@@ -13,6 +13,9 @@ class TestView(
 
     private val paint = Paint()
     private val paintC = Paint()
+    private val startAngle = -180f
+    private val colors = listOf(Color.GREEN, Color.RED, Color.BLUE, Color.YELLOW)
+    private val sweepAngle = 360f / colors.size
 
     init {
         paint.style = Paint.Style.STROKE
@@ -23,15 +26,27 @@ class TestView(
         paintC.color = Color.GRAY
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (canvas != null) {
-            canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paintC)
-        }
+        drawCircleButton(canvas)
+    }
 
-        if (canvas != null) {
-            paint.color = Color.RED
-            canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), 100f, paint)
+    private fun drawCircleButton(canvas: Canvas) {
+        val centerX = width / 2f
+        val centerY = width / 2f
+        val radius = width.coerceAtMost(height) / 2f
+        for (i in colors.indices) {
+            paintC.color = colors[i]
+            canvas.drawArc(
+                centerX - radius,
+                centerY - radius,
+                centerX + radius,
+                centerY + radius,
+                startAngle + i * sweepAngle,
+                sweepAngle,
+                true,
+                paintC
+            )
         }
     }
 }
