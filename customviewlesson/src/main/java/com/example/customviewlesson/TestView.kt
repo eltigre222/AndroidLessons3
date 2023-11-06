@@ -28,10 +28,12 @@ class TestView(
         paintC.style = Paint.Style.FILL
         paintC.color = Color.GRAY
     }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawCircleButton(canvas)
     }
+
     private fun drawCircleButton(canvas: Canvas) {
         val centerX = width / 2f
         val centerY = width / 2f
@@ -50,6 +52,7 @@ class TestView(
             )
         }
     }
+    
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val centerX = width / 2f
         val centerY = width / 2f
