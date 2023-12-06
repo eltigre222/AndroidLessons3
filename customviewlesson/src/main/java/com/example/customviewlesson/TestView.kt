@@ -7,7 +7,6 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintSet.Motion
 
 class TestView(
     context: Context, attributeSet: AttributeSet
@@ -28,7 +27,6 @@ class TestView(
         paintC.style = Paint.Style.FILL
         paintC.color = Color.GRAY
     }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawCircleButton(canvas)
@@ -52,7 +50,6 @@ class TestView(
             )
         }
     }
-
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val centerX = width / 2f
         val centerY = width / 2f
