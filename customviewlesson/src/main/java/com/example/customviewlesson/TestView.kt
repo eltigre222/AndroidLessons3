@@ -11,6 +11,7 @@ import android.view.View
 class TestView(
     context: Context, attributeSet: AttributeSet
 ) : View(context, attributeSet) {
+
     private val paint = Paint()
     private val paintC = Paint()
     private val startAngle = -180f
@@ -26,7 +27,6 @@ class TestView(
         paintC.style = Paint.Style.FILL
         paintC.color = Color.GRAY
     }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawCircleButton(canvas)
@@ -49,6 +49,7 @@ class TestView(
             )
         }
     }
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val centerX = width / 2f
         val centerY = width / 2f
