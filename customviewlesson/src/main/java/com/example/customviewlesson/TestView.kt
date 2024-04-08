@@ -23,14 +23,15 @@ class TestView(
         paint.style = Paint.Style.STROKE
         paint.color = Color.GREEN
         paint.strokeWidth = 10f
-
         paintC.style = Paint.Style.FILL
         paintC.color = Color.GRAY
     }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawCircleButton(canvas)
     }
+
     private fun drawCircleButton(canvas: Canvas) {
         val centerX = width / 2f
         val centerY = width / 2f
