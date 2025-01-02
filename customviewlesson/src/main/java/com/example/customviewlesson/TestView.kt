@@ -15,23 +15,21 @@ class TestView(
     private val paint = Paint()
     private val paintC = Paint()
     private val startAngle = -180f
-    private val colors = listOf(Color.GREEN, Color.RED, Color.BLUE, Color.YELLOW)
+    private val colors = listOf(Color.GRAY, Color.RED, Color.BLUE, Color.YELLOW)
     private val sweepAngle = 360f / colors.size
     private var buttonClicked = -1
 
     init {
         paint.style = Paint.Style.STROKE
-        paint.color = Color.GREEN
+        paint.color = Color.GRAY
         paint.strokeWidth = 10f
         paintC.style = Paint.Style.FILL
-        paintC.color = Color.GRAY
+        paintC.color = Color.BLACK
     }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawCircleButton(canvas)
     }
-
     private fun drawCircleButton(canvas: Canvas) {
         val centerX = width / 2f
         val centerY = width / 2f
@@ -50,7 +48,6 @@ class TestView(
             )
         }
     }
-
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val centerX = width / 2f
         val centerY = width / 2f
