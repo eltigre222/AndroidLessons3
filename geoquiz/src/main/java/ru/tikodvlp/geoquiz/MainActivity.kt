@@ -63,27 +63,23 @@ class MainActivity : AppCompatActivity() {
             trueButton.isClickable = false
             falseButton.isClickable = false
         }
-
         falseButton.setOnClickListener{ view: View ->
             checkAnswer(false)
             trueButton.isClickable = false
             falseButton.isClickable = false
         }
-
         nextButton.setOnClickListener{
             quizViewModel.moveToNext()
             updateQuestion()
             trueButton.isClickable = true
             falseButton.isClickable = true
         }
-
         backButton.setOnClickListener{
             quizViewModel.moveToBack()
             updateQuestion()
             trueButton.isClickable = false
             falseButton.isClickable = false
         }
-
         var tokens = 3
         cheatButton.setOnClickListener{ view ->
             if (tokens <= 3 && tokens != 0) {
