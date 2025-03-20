@@ -101,7 +101,6 @@ class MainActivity : AppCompatActivity() {
         }
         updateQuestion()
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_OK) {
@@ -112,7 +111,6 @@ class MainActivity : AppCompatActivity() {
                 data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
         }
     }
-
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart called")
@@ -137,13 +135,11 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d(TAG, "onDestroy called")
     }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Log.i(TAG, "onSaveInstanceState")
         outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
     }
-
     private fun updateQuestion() {
         val questionTextResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionTextResId)
