@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             trueButton.isClickable = false
             falseButton.isClickable = false
         }
+
         var tokens = 3
         cheatButton.setOnClickListener{ view ->
             if (tokens <= 3 && tokens != 0) {
@@ -101,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         }
         updateQuestion()
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_OK) {
@@ -111,10 +113,12 @@ class MainActivity : AppCompatActivity() {
                 data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
         }
     }
+
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart called")
     }
+
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume called")
