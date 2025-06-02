@@ -118,19 +118,21 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         Log.d(TAG, "onStart called")
     }
-
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume called")
     }
+
     override fun onPause() {
         super.onPause()
         Log.d(TAG, "onPause called")
     }
+
     override fun onStop() {
         super.onStop()
         Log.d(TAG, "onStop called")
     }
+
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "onDestroy called")
@@ -141,6 +143,7 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "onSaveInstanceState")
         outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
     }
+
     private fun updateQuestion() {
         val questionTextResId = quizViewModel.currentQuestionText
         questionTextView.setText(questionTextResId)
