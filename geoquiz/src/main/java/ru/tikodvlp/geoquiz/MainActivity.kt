@@ -113,7 +113,6 @@ class MainActivity : AppCompatActivity() {
                 data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
         }
     }
-
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart called")
