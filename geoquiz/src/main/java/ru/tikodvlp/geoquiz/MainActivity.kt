@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity() {
         }
         updateQuestion()
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_OK) {
@@ -113,17 +112,14 @@ class MainActivity : AppCompatActivity() {
                 data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
         }
     }
-
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart called")
     }
-
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume called")
     }
-
     override fun onPause() {
         super.onPause()
         Log.d(TAG, "onPause called")
