@@ -123,17 +123,14 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         Log.d(TAG, "onResume called")
     }
-
     override fun onPause() {
         super.onPause()
         Log.d(TAG, "onPause called")
     }
-
     override fun onStop() {
         super.onStop()
         Log.d(TAG, "onStop called")
     }
-
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "onDestroy called")
