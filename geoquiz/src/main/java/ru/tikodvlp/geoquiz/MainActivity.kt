@@ -112,14 +112,17 @@ class MainActivity : AppCompatActivity() {
                 data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
         }
     }
+
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart called")
     }
+
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume called")
     }
+
     override fun onPause() {
         super.onPause()
         Log.d(TAG, "onPause called")
